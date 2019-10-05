@@ -1,11 +1,12 @@
 import * as React from 'react';
+import {IFunctionalComponentWithRole} from './interfaces';
 
 interface IProps {
   children: React.ReactElement[],
   onSelect?: (index: number) => void;
 }
 
-const Tabs: React.FunctionComponent = ({
+const Tabs: IFunctionalComponentWithRole= ({
   children,
   onSelect,
 }: IProps) => {
@@ -22,5 +23,7 @@ const Tabs: React.FunctionComponent = ({
     </ul>
   )
 }
+
+Tabs.role = 'Tabs';
 
 export default Tabs;

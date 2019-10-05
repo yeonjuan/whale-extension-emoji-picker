@@ -1,6 +1,7 @@
 import * as React from 'react';
+import {IFunctionalComponentWithRole} from './interfaces';
 
-export const TabPanel: React.FunctionComponent = ({
+const TabPanel: IFunctionalComponentWithRole = ({
   children,
 }) => {
   return (
@@ -9,5 +10,7 @@ export const TabPanel: React.FunctionComponent = ({
     </div>
   )
 }
+
+TabPanel.role = 'TabPanel';
 
 export default TabPanel;
