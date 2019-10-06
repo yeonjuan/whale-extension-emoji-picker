@@ -6,7 +6,11 @@ const isPanel = (elem: any) => elem.type.role === 'TabPanel';
 const findTabs = (childElems: React.ReactNode[]) => childElems.filter(isTabs)[0];
 const findPanelByIndex = (childElems: React.ReactNode[], index: number) => childElems.filter(isPanel)[index];
 
-const TabMenu: React.FunctionComponent = ({
+interface ITabMenuProps {
+  children: React.ReactNode;
+}
+
+const TabMenu: React.SFC<ITabMenuProps> = ({
   children,
 }) => {
 
@@ -25,7 +29,8 @@ const TabMenu: React.FunctionComponent = ({
            tabs && React.cloneElement(
             tabs as React.ReactElement,
             {
-              onSelect: handleSelectTab
+              onSelect: handleSelectTab,
+              selectedIndex: selectedTabIndex,
             }
           )
         }

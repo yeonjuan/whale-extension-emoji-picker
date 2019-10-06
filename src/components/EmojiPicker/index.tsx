@@ -3,12 +3,24 @@ import { EMOJI_TITLE_MAP, EmojiType, getEmojisByType } from 'src/emojis';
 import {copyToClipboard, enumToArray} from '../../utils';
 import {Tab, TabMenu, TabPanel, Tabs} from '../commons';
 
-const EmojiPicker: React.FunctionComponent = () => {
+interface IEmojiPickerProps {
+  onPick?: (emoji: string) => void;
+}
+
+const EmojiPicker: React.SFC<IEmojiPickerProps> = ({
+  onPick,
+}) => {
   const emojiTypes = enumToArray(EmojiType);
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>): void => {
     e.preventDefault();
-    copyToClipboard(e.currentTarget ? e.currentTarget.innerText: '');
+    if (e.currentTarget && e.currentTarget.innerText) {
+      const emoji = e.currentTarget.innerText;
+      copyToClipboard(emoji);
+      if (typeof onPick === 'function') {
+        onPick(emoji);
+      }
+    }
   }
   return (
     <TabMenu>
@@ -16,7 +28,9 @@ const EmojiPicker: React.FunctionComponent = () => {
         {
           emojiTypes.map(({id, name}) => (
             <Tab key={name}>
-              <a> {EMOJI_TITLE_MAP[id]} </a>
+              <>
+                {EMOJI_TITLE_MAP[id]}
+              </>
             </Tab>
             )
           )

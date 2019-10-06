@@ -2,20 +2,23 @@ import * as React from 'react';
 import {IFunctionalComponentWithRole} from './interfaces';
 
 interface IProps {
-  children: React.ReactElement[],
+  children: React.ReactElement[];
   onSelect?: (index: number) => void;
+  selectedIndex: number;
 }
 
 const Tabs: IFunctionalComponentWithRole= ({
   children,
   onSelect,
-}: IProps) => {
+  selectedIndex,
+} : IProps) => {
   return (
     <ul>
       {
         React.Children.map(children, (child, index) => React.cloneElement(
           child,
           {
+            isSelected: selectedIndex === index,
             onSelect: () => onSelect && onSelect(index),
           })
         )

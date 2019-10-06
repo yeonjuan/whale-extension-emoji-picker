@@ -1,17 +1,23 @@
 import * as React from 'react';
 
-interface IProps {
-  children: React.ReactChildren,
-  onSelect: () => void,
+interface ITabProps {
+  children: React.ReactNode;
+  onSelect?: () => void;
+  className?: string;
+  isSelected?: boolean;
+  key?: string;
 }
 
-const Tab: React.FunctionComponent = ({
+const Tab: React.SFC<ITabProps> = ({
   children,
   onSelect,
-}: IProps) => {
+  isSelected = false,
+} : ITabProps) => {
   return (
     <li onClick={onSelect}>
-      {children}
+      <a className={isSelected ? 'selected' : 'unselected'}>
+        {children}
+      </a>
     </li>
   )
 };
