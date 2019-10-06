@@ -7,9 +7,11 @@ interface IProps {
 export const Title: React.FunctionComponent<IProps> = ({
   title,
 }: IProps) => (
-  <h1>
-    {title}
-  </h1>
+  <div className={'title'}>
+    <h1>
+      {title}
+    </h1>
+  </div>
 );
 
 Title.defaultProps = {
