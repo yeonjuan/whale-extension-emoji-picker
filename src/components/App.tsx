@@ -21,7 +21,7 @@ const App: React.FunctionComponent = () => {
   const {show, message} = toast;
   return (
     <div className="App">
-      <Title title="Emoji Picker"/>
+      <Title title="이모지 피커"/>
       <EmojiPicker onPick={handlePick}/>
       <Toast show={show} message={message} onClosed={handleClosed}/>
     </div>
