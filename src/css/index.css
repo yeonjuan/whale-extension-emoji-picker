@@ -101,6 +101,7 @@ h1 {
   position: fixed;
   transform: translateX(-50%) translateY(150%);
   transition: transform .35s ease;
+  font-size: 20px;
 }
 
 #toast.show {
