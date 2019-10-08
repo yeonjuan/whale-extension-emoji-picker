@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-interface ITabProps {
-  children: React.ReactNode;
+export interface ITabProps {
+  children?: React.ReactNode;
   onSelect?: () => void;
   className?: string;
   isSelected?: boolean;
