@@ -14,14 +14,14 @@ describe('<Title />', () => {
     container = null;
   });
 
-  it('에러 없이 렌더링 한다.', () => {
+  it('Should render without errors', () => {
     act(() => {
       ReactDOM.render(<Title />, container);
       ReactDOM.unmountComponentAtNode(container);
     });
   });
 
-  it('props {title} 을 h1 으로 렌더링 한다.', () => {
+  it('Should have a `h1` tag with props {title}', () => {
     const props = {
       title: 'test',
     }
