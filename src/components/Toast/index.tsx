@@ -18,9 +18,6 @@ const Toast: React.SFC<IToastProps> = ({
     if (show !== visible) {
       setVisible(show);
     }
-  }, [show]);
-
-  React.useEffect(() => {
     const timer = setTimeout(() => {
       setVisible(false);
       if (onClosed) {
