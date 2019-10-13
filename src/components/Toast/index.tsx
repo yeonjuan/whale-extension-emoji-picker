@@ -3,14 +3,18 @@ import * as React from 'react';
 export interface IToastProps {
   show: boolean,
   onClosed?: () => void;
-  message: string;
+  message?: string;
+}
+
+const defaultProps: IToastProps = {
+  show: false,
 }
 
 const Toast: React.SFC<IToastProps> = ({
   show = false,
   onClosed,
   message,
-}: IToastProps) => {
+}) => {
 
   const [visible, setVisible] = React.useState(false);
 
@@ -35,5 +39,7 @@ const Toast: React.SFC<IToastProps> = ({
     </div>
   )
 };
+
+Toast.defaultProps = defaultProps;
 
 export default Toast;
