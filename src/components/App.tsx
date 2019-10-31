@@ -10,7 +10,7 @@ const App: React.FunctionComponent = () => {
     show: false,
   });
   const handleClosed = () => setToast({
-    message: '',
+    ...toast,
     show: false,
   });
   const handlePick = (emoji: string) => setToast({
