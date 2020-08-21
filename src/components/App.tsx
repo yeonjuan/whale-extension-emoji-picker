@@ -1,7 +1,7 @@
 import * as React from 'react';
 import '../css/App.css';
 import EmojiPicker from './EmojiPicker';
-import {Title} from './Title';
+import Title from './Title';
 import Toast from './Toast';
 
 const App: React.FunctionComponent = () => {
@@ -21,9 +21,13 @@ const App: React.FunctionComponent = () => {
   const {show, message} = toast;
   return (
     <div className="App">
-      <Title title="이모지 피커"/>
+      <Title>이모지 피커</Title>
       <EmojiPicker onPick={handlePick}/>
-      <Toast show={show} message={message} onClosed={handleClosed}/>
+      <Toast
+        show={show}
+        message={message}
+        onClosed={handleClosed}
+      />
     </div>
   )
 };

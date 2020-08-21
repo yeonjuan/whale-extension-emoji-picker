@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { EMOJI_TITLE_MAP, EmojiType, getEmojisByType } from 'src/emojis';
-import {copyToClipboard, enumToArray} from '../../utils';
-import {Tab, TabMenu, TabPanel, Tabs} from '../commons';
+import {copyToClipboard, enumToArray} from './../utils';
+import {Tab, TabMenu, TabPanel, Tabs} from './commons';
 
-interface IEmojiPickerProps {
+interface IProps {
   onPick?: (emoji: string) => void;
 }
 
-const EmojiPicker: React.SFC<IEmojiPickerProps> = ({
+const EmojiPicker: React.SFC<IProps> = ({
   onPick,
 }) => {
   const emojiTypes = enumToArray(EmojiType);
