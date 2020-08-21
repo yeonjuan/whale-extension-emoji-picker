@@ -1,8 +1,8 @@
 import * as React from 'react';
 import '../css/App.css';
-import EmojiPicker from './EmojiPicker';
-import Title from './Title';
-import Toast from './Toast';
+import {EmojiPicker} from './EmojiPicker';
+import {Title} from './Title';
+import {Toast} from './Toast';
 
 const App: React.FunctionComponent = () => {
   const [toast, setToast] = React.useState({

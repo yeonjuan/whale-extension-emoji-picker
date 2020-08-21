@@ -1,13 +1,13 @@
-import * as React from 'react';
-import {IFunctionalComponentWithRole} from './interfaces';
+import React, {Children, cloneElement} from 'react';
+import {IFCWithRole} from './types';
 
 interface IProps {
   children: React.ReactElement[];
-  onSelect?: (index: number) => void;
   selectedIndex: number;
+  onSelect?: (index: number) => void;
 }
 
-const Tabs: IFunctionalComponentWithRole= ({
+const Tabs: IFCWithRole= ({
   children,
   onSelect,
   selectedIndex,
@@ -15,11 +15,11 @@ const Tabs: IFunctionalComponentWithRole= ({
   return (
     <ul>
       {
-        React.Children.map(children, (child, index) => React.cloneElement(
+        Children.map(children, (child, index) => cloneElement(
           child,
           {
             isSelected: selectedIndex === index,
-            onSelect: () => onSelect && onSelect(index),
+            onSelect: () => onSelect?.(index),
           })
         )
       }

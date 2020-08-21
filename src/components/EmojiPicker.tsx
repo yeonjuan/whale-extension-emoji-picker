@@ -1,25 +1,25 @@
-import * as React from 'react';
-import { EMOJI_TITLE_MAP, EmojiType, getEmojisByType } from 'src/emojis';
+import React, {FC, MouseEvent} from 'react';
+import {EMOJI_TITLE_MAP, EmojiType, getEmojisByType } from 'src/emojis';
 import {copyToClipboard, enumToArray} from './../utils';
-import {Tab, TabMenu, TabPanel, Tabs} from './commons';
+import {Tab, TabMenu, TabPanel, Tabs} from './Tab';
 
 interface IProps {
   onPick?: (emoji: string) => void;
 }
 
-const EmojiPicker: React.SFC<IProps> = ({
+export const EmojiPicker: FC<IProps> = ({
   onPick,
 }) => {
   const emojiTypes = enumToArray(EmojiType);
 
-  const handleClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>): void => {
-    e.preventDefault();
-    if (e.currentTarget && e.currentTarget.innerText) {
-      const emoji = e.currentTarget.innerText;
+  const handleClick = (
+    event: MouseEvent<HTMLAnchorElement>
+  ): void => {
+    event.preventDefault();
+    if (event.currentTarget?.innerText) {
+      const emoji = event.currentTarget.innerText;
       copyToClipboard(emoji);
-      if (typeof onPick === 'function') {
-        onPick(emoji);
-      }
+      onPick?.(emoji);
     }
   }
   return (
@@ -28,9 +28,7 @@ const EmojiPicker: React.SFC<IProps> = ({
         {
           emojiTypes.map(({id, name}) => (
             <Tab key={name}>
-              <>
                 {EMOJI_TITLE_MAP[id]}
-              </>
             </Tab>
             )
           )
@@ -61,5 +59,3 @@ const EmojiPicker: React.SFC<IProps> = ({
     </TabMenu>
   )
 };
-
-export default EmojiPicker;

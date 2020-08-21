@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 
 const TOAST_TIME_MS = 1000;
 
@@ -8,11 +8,11 @@ interface IProps {
   onClosed?: () => void;
 }
 
-export default function Toast ({
+export const Toast: FC<IProps> = ({
   show = false,
   message = '',
   onClosed,
-}: IProps) {
+}) => {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {

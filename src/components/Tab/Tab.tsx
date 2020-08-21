@@ -1,6 +1,6 @@
-import * as React from 'react';
+import React, {FC} from 'react';
 
-export interface ITabProps {
+interface IProps {
   children?: React.ReactNode;
   onSelect?: () => void;
   className?: string;
@@ -8,11 +8,11 @@ export interface ITabProps {
   key?: string;
 }
 
-const Tab: React.SFC<ITabProps> = ({
+const Tab: FC<IProps> = ({
   children,
   onSelect,
   isSelected = false,
-} : ITabProps) => {
+} : IProps) => {
   return (
     <li onClick={onSelect}>
       <a className={isSelected ? 'selected' : 'unselected'}>
