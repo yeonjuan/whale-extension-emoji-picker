@@ -1,11 +1,18 @@
-import * as React from 'react';
-import '../css/App.css';
+/* tslint:disable */
+import React, {FC, useState} from 'react';
+import {useLocalStorage} from '../hooks';
 import {EmojiPicker} from './EmojiPicker';
 import {Title} from './Title';
 import {Toast} from './Toast';
+import {History} from './History';
+import '../css/App.css';
 
-const App: React.FunctionComponent = () => {
-  const [toast, setToast] = React.useState({
+const MAX_HISTORY = 10;
+
+
+const App: FC = () => {
+  const [storageValue, setStorageValue] = useLocalStorage<string[]>('history', []);
+  const [toast, setToast] = useState({
     message: '',
     show: false,
   });
@@ -13,15 +20,25 @@ const App: React.FunctionComponent = () => {
     ...toast,
     show: false,
   });
-  const handlePick = (emoji: string) => setToast({
-    message: `${emoji} Copied!`,
-    show: true,
-  });
+  const handlePick = (emoji: string) => {
+    setToast({
+      message: `${emoji} Copied!`,
+      show: true,
+    });
+    const filterd = storageValue.filter(value => value !== emoji)
+    const newStorageValue = [emoji, ...filterd];
+    if (newStorageValue.length > MAX_HISTORY) {
+      newStorageValue.pop();
+    }
+    
+    setStorageValue(newStorageValue);
+  }
 
   const {show, message} = toast;
   return (
     <div className="App">
       <Title>이모지 피커</Title>
+      <History history={storageValue}/>
       <EmojiPicker onPick={handlePick}/>
       <Toast
         show={show}
