@@ -7,7 +7,7 @@
 /coverage
 
 # production
-/build
+/dist
 
 # misc
 .DS_Store
@@ -22,3 +22,5 @@ yarn-error.log*
 yarn.lock*
 *.pem
 .whx
+.parcel-cache
+__src
