@@ -18024,6 +18024,102 @@
     "subgroup": "person-activity"
   },
   {
+    "codes": "1F469 200D 1F9BC 200D 27A1 FE0F",
+    "char": "👩‍🦼‍➡️",
+    "name": "woman in motorized wheelchair facing right",
+    "category": "People & Body (person-activity)",
+    "group": "People & Body",
+    "subgroup": "person-activity"
+  },
+  {
+    "codes": "1F469 200D 1F9BC 200D 27A1",
+    "char": "👩‍🦼‍➡",
+    "name": "woman in motorized wheelchair facing right",
+    "category": "People & Body (person-activity)",
+    "group": "People & Body",
+    "subgroup": "person-activity"
+  },
+  {
+    "codes": "1F469 1F3FB 200D 1F9BC 200D 27A1 FE0F",
+    "char": "👩🏻‍🦼‍➡️",
+    "name": "woman in motorized wheelchair facing right: light skin tone",
+    "category": "People & Body (person-activity)",
+    "group": "People & Body",
+    "subgroup": "person-activity"
+  },
+  {
+    "codes": "1F469 1F3FB 200D 1F9BC 200D 27A1",
+    "char": "👩🏻‍🦼‍➡",
+    "name": "woman in motorized wheelchair facing right: light skin tone",
+    "category": "People & Body (person-activity)",
+    "group": "People & Body",
+    "subgroup": "person-activity"
+  },
+  {
+    "codes": "1F469 1F3FC 200D 1F9BC 200D 27A1 FE0F",
+    "char": "👩🏼‍🦼‍➡️",
+    "name": "woman in motorized wheelchair facing right: medium-light skin tone",
+    "category": "People & Body (person-activity)",
+    "group": "People & Body",
+    "subgroup": "person-activity"
+  },
+  {
+    "codes": "1F469 1F3FC 200D 1F9BC 200D 27A1",
+    "char": "👩🏼‍🦼‍➡",
+    "name": "woman in motorized wheelchair facing right: medium-light skin tone",
+    "category": "People & Body (person-activity)",
+    "group": "People & Body",
+    "subgroup": "person-activity"
+  },
+  {
+    "codes": "1F469 1F3FD 200D 1F9BC 200D 27A1 FE0F",
+    "char": "👩🏽‍🦼‍➡️",
+    "name": "woman in motorized wheelchair facing right: medium skin tone",
+    "category": "People & Body (person-activity)",
+    "group": "People & Body",
+    "subgroup": "person-activity"
+  },
+  {
+    "codes": "1F469 1F3FD 200D 1F9BC 200D 27A1",
+    "char": "👩🏽‍🦼‍➡",
+    "name": "woman in motorized wheelchair facing right: medium skin tone",
+    "category": "People & Body (person-activity)",
+    "group": "People & Body",
+    "subgroup": "person-activity"
+  },
+  {
+    "codes": "1F469 1F3FE 200D 1F9BC 200D 27A1 FE0F",
+    "char": "👩🏾‍🦼‍➡️",
+    "name": "woman in motorized wheelchair facing right: medium-dark skin tone",
+    "category": "People & Body (person-activity)",
+    "group": "People & Body",
+    "subgroup": "person-activity"
+  },
+  {
+    "codes": "1F469 1F3FE 200D 1F9BC 200D 27A1",
+    "char": "👩🏾‍🦼‍➡",
+    "name": "woman in motorized wheelchair facing right: medium-dark skin tone",
+    "category": "People & Body (person-activity)",
+    "group": "People & Body",
+    "subgroup": "person-activity"
+  },
+  {
+    "codes": "1F469 1F3FF 200D 1F9BC 200D 27A1 FE0F",
+    "char": "👩🏿‍🦼‍➡️",
+    "name": "woman in motorized wheelchair facing right: dark skin tone",
+    "category": "People & Body (person-activity)",
+    "group": "People & Body",
+    "subgroup": "person-activity"
+  },
+  {
+    "codes": "1F469 1F3FF 200D 1F9BC 200D 27A1",
+    "char": "👩🏿‍🦼‍➡",
+    "name": "woman in motorized wheelchair facing right: dark skin tone",
+    "category": "People & Body (person-activity)",
+    "group": "People & Body",
+    "subgroup": "person-activity"
+  },
+  {
     "codes": "1F9D1 200D 1F9BD",
     "char": "🧑‍🦽",
     "name": "person in manual wheelchair",

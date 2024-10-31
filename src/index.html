@@ -7,16 +7,146 @@
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
     <meta name="theme-color" content="#000000" />
-    <style></style>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: sans-serif;
+        background: white;
+      }
+      h1 {
+        text-align: center;
+        font-size: 20px;
+      }
+      ul {
+        width: 100%;
+        display: table;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        width: 100%;
+        border: solid #e1e4e8;
+        border-width: 0px 0px 1px 0px;
+      }
+      input {
+        margin: 0 auto;
+        display: block;
+        width: 80%;
+        font-size: 18px;
+        padding: 2px;
+      }
+      li {
+        display: table-cell;
+        width: 25%;
+        float: left;
+        text-align: center;
+        display: block;
+      }
+      #search-result li {
+        width: 10%;
+      }
+      li button {
+        cursor: pointer;
+        background: white;
+        display: inline-block;
+        width: 100%;
+        padding-top: 4px;
+        padding-bottom: 4px;
+        font-size: 1rem;
+        font-weight: 600;
+        line-height: 20px;
+        color: #586069;
+        border: solid #e1e4e8;
+        border-width: 1px 0px 0px 1px;
+        font-size: 14px;
+      }
+
+      li button.unselected:hover {
+        background: #f6f8fa;
+        z-index: 2;
+      }
+
+      button.selected {
+        background: #0366d6;
+        border-color: #0366d6;
+        color: #fff;
+        z-index: 2;
+      }
+
+      .emojis {
+        padding: 10px 10px 0px 10px;
+        max-height: 600px;
+        overflow-y: scroll;
+        border: solid #e1e4e8;
+        border-width: 0px 0px 1px 0px;
+      }
+      .emojis button {
+        font-size: 2rem;
+        cursor: pointer;
+        padding: 4px;
+        display: inline-block;
+        border: 1px solid #fff;
+      }
+
+      .emojis button:hover {
+        border: 1px solid #0366d6;
+        border-radius: 10px;
+        background: #f6f8fa;
+      }
+
+      h1 {
+        background: white;
+        margin: 0;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        color: #24292e;
+        font-weight: 600;
+      }
+
+      #toast {
+        background-color: #0366d6;
+        color: #fff;
+        text-align: center;
+        border-radius: 2px;
+        padding: 16px;
+        align-items: center;
+        border-radius: 25px;
+        bottom: 0px;
+        display: flex;
+        min-height: 50px;
+        max-height: 50px;
+        justify-content: space-between;
+        left: 50%;
+        padding: 0 20px;
+        position: fixed;
+        transform: translateX(-50%) translateY(150%);
+        transition: transform 0.35s ease;
+        font-size: 20px;
+      }
+
+      #toast.show {
+        transform: translateX(-50%) translateY(-50%);
+      }
+      .search-container {
+        display: flex;
+        padding-bottom: 20px;
+        width: 100%;
+      }
+    </style>
   </head>
   <body>
     <div>
       <div class="App">
         <h1>이모지 피커 <span>v2</span></h1>
-        <input id="search" placeholder="search" />
-        <div id="search-result"></div>
-        <div id="category-tab"></div>
-        <div id="emoji-table"></div>
+        <div class="search-container">
+          <input id="search" placeholder="검색" />
+          <button>Clear</button>
+        </div>
+        <div id="content">
+          <div id="tab"></div>
+          <div id="emoji-list"></div>
+        </div>
       </div>
     </div>
     <!-- prettier-ignore -->
@@ -16071,7 +16201,27 @@ var e,t;e=this,t=function(){"use strict";function e(e,t){var n=Object.keys(e);if
       window.emojidata = data;
     </script>
     <script>
-      const categoryMap = {
+      // utils
+      const copyToClipboard = (content) => {
+        const textField = document.createElement("textarea");
+        textField.innerText = content;
+        document.body.appendChild(textField);
+        textField.select();
+        document.execCommand("copy");
+        textField.remove();
+      };
+      function debounce(func, timeout = 300) {
+        let timer;
+        return (...args) => {
+          clearTimeout(timer);
+          timer = setTimeout(() => {
+            func.apply(this, args);
+          }, timeout);
+        };
+      }
+
+      // constants
+      const CATEGORY_MAP = {
         0: "표정",
         1: "사람과 판타지",
         2: "옷과 장신구",
@@ -16089,99 +16239,126 @@ var e,t;e=this,t=function(){"use strict";function e(e,t){var n=Object.keys(e);if
         14: "국기",
         15: "탈것",
       };
+      const EMOJI_LIST = window.emojidata;
+      const CATEGORY_LIST = Object.entries(CATEGORY_MAP).map(
+        ([value, display]) => ({ value, display }),
+      );
 
-      const state = (function () {
-        const obj = {
-          currentTab: 0,
-          _listeners: [],
-          changeTab(value) {
-            this.currentTab = value;
-            this._listeners.forEach((listener) => listener(value));
-          },
-          onChangeTab(listener) {
-            this._listeners.push(listener);
-          },
-        };
-        return obj;
-      })();
-
-      function categoryTabHtml() {
-        let html = "";
-        for (const [value, displayName] of Object.entries(categoryMap)) {
-          html += `<button data-value="${value}">${displayName}</button>`;
-        }
-        return html;
-      }
-
-      function emojiTableHtml() {
-        let html = "";
-        const emojiList = window.emojidata[state.currentTab];
-        for (const emoji of emojiList) {
-          html += `<button data-value="${emoji.ch}">${emoji.ch}</button>`;
-        }
-        return html;
-      }
-
-      function renderSearchResult(result) {
-        console.log(result);
-        let html = "";
-        for (const r of result) {
-          html += `<button data-value="${r.item.ch}">${r.item.ch}</button>`;
-        }
-        return html;
-      }
-
-      const copyToClipboard = (content) => {
-        const textField = document.createElement("textarea");
-        textField.innerText = content;
-        document.body.appendChild(textField);
-        textField.select();
-        document.execCommand("copy");
-        textField.remove();
+      // state
+      const state = {
+        currentTab: 0,
+        _listeners: [],
+        changeTab(value) {
+          this.currentTab = value;
+          this._listeners.forEach((listener) => listener(value));
+        },
+        onChangeTab(listener) {
+          this._listeners.push(listener);
+        },
       };
 
-      const $categoryTab = document.getElementById("category-tab");
-      $categoryTab.innerHTML = categoryTabHtml();
-      $categoryTab.addEventListener("click", (tab) => {
-        state.changeTab(Number(tab.target.dataset.value));
-      });
+      // contols
+      function initTabs() {
+        function createTabs(items) {
+          const ul = document.createElement("ul");
+          ul.classList.add("tabs");
+          items.forEach((item) => {
+            const li = document.createElement("li");
+            const button = document.createElement("button");
+            button.classList.add("unselected");
+            button.textContent = item.display;
+            button.dataset.value = item.value;
+            li.appendChild(button);
+            li.classList.add("tab");
+            ul.appendChild(li);
+          });
+          return ul;
+        }
 
-      const $emojiTable = document.getElementById("emoji-table");
-      state.onChangeTab(() => {
-        $emojiTable.innerHTML = emojiTableHtml();
-      });
-      $emojiTable.addEventListener("click", (event) => {
-        copyToClipboard(event.target.dataset.value);
-      });
-
-      state.changeTab(state.currentTab);
-
-      const $search = document.getElementById("search");
-      const flatten = window.emojidata.reduce(function (a, b) {
-        return a.concat(b);
-      }, []);
-
-      const fuse = new Fuse(flatten, {
-        keys: ["n.en", "n.ko"],
-        threshold: 0.6,
-        shouldSort: true,
-      });
-      function debounce(func, timeout = 300) {
-        let timer;
-        return (...args) => {
-          clearTimeout(timer);
-          timer = setTimeout(() => {
-            func.apply(this, args);
-          }, timeout);
-        };
+        const $tabContainer = document.getElementById("tab");
+        const $tabs = createTabs(CATEGORY_LIST);
+        $tabContainer.appendChild($tabs);
+        $tabs.addEventListener("click", (event) => {
+          state.changeTab(parseInt(event.target.dataset.value));
+          const $before = $tabs.getElementsByTagName("button");
+          [...$before].forEach((elem) => elem.classList.remove("selected"));
+          event.target.classList.remove("unselected");
+          event.target.classList.add("selected");
+        });
       }
-      const $searchResult = document.getElementById("search-result");
-      const onInput = debounce((event) => {
-        $searchResult.innerHTML = renderSearchResult(
-          fuse.search(event.target.value, { limit: 16 }),
-        );
-      });
-      $search.addEventListener("input", onInput);
+
+      function initEmojiTable() {
+        function createEmojiList(items) {
+          const ul = document.createElement("ul");
+          ul.classList.add("emojis");
+          items.forEach((item) => {
+            const li = document.createElement("li");
+            const button = document.createElement("button");
+            button.dataset.value = item.ch;
+            button.innerText = item.ch;
+            li.appendChild(button);
+            ul.appendChild(li);
+          });
+          ul.addEventListener("click", (event) => {
+            copyToClipboard(event.target.dataset.value);
+          });
+          return ul;
+        }
+
+        const cache = {};
+        function getEmojiList(tab) {
+          if (cache[tab]) return cache;
+          return createEmojiList(EMOJI_LIST[tab]);
+        }
+
+        const $emojiListContainer = document.getElementById("emoji-list");
+        state.onChangeTab((tab) => {
+          const $emojiList = getEmojiList(tab);
+          if ($emojiListContainer.firstChild) {
+            $emojiListContainer.removeChild($emojiListContainer.firstChild);
+          }
+          $emojiListContainer.appendChild($emojiList);
+        });
+      }
+
+      function initSearch() {
+        const $search = document.getElementById("search");
+        const flatten = window.emojidata.reduce(function (a, b) {
+          return a.concat(b);
+        }, []);
+
+        const fuse = new Fuse(flatten, {
+          keys: ["n.en", "n.ko"],
+          threshold: 0.6,
+          shouldSort: true,
+        });
+
+        const $content = document.getElementById("content");
+        let htmlBefore = $content.innerHTML;
+
+        const onInput = debounce((event) => {
+          if (event.target.value.length <= 0) {
+            $content.innerHTML = `    <div id="tab"></div>
+          <div id="emoji-list"></div>`;
+            initTabs();
+            initEmojiTable();
+            state.changeTab(state.currentTab);
+            return;
+          }
+          const result = fuse.search(event.target.value, { limit: 30 });
+          if (!result.length) {
+            $content.innerHTML = "결과가 없습니다.";
+          } else {
+            $content.innerHTML = "결과가 있습니다.";
+          }
+        });
+        $search.addEventListener("input", onInput);
+      }
+
+      initTabs();
+      initEmojiTable();
+      initSearch();
+      state.changeTab(state.currentTab);
     </script>
   </body>
 </html>
