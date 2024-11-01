@@ -1,19 +1,19 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "이모지 피커",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "icons": {
     "16": "icon16.png",
     "48": "icon48.png",
-   "128": "icon128.png"
+    "128": "icon128.png"
   },
   "description": "이모지를 클릭으로 클립보드에 담으세요.",
   "sidebar_action": {
     "default_page": "index.html",
     "default_icon": {
-        "16": "icon16.png",
-        "48": "icon48.png",
-       "128": "icon128.png"
+      "16": "icon16.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
     },
     "default_title": "이모지 피커",
     "use_navigation_bar": true,
